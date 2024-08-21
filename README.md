@@ -1,32 +1,32 @@
 # Data Scientist
 
+[Resume]()
+
 #### Technical Skills: Python, SQL, AWS, Snowflake, MATLAB
 
 ## Education			        		
 - B.S., Applied Math and Statistics, 2nd major Information Systems | SUNY Stony Brook (_2022-present_)
 
 ## Work Experience
-**Data Scientist @ Toyota Financial Services (_June 2022 - Present_)**
-- Uncovered and corrected missing step in production data pipeline which impacted over 70% of active accounts
-- Redeveloped loan originations model which resulted in 50% improvement in model performance and saving 1 million dollars in potential losses
+**Teaching Assistant - Linear Algebra (_Dec-May 2024_)**
 
-**Data Science Consultant @ Shawhin Talebi Ventures LLC (_December 2020 - Present_)**
-- Conducted data collection, processing, and analysis for novel study evaluating the impact of over 300 biometrics variables on human performance in hyper-realistic, live-fire training scenarios
-- Applied unsupervised deep learning approaches to longitudinal ICU data to discover novel sepsis sub-phenotypes
+**Retail Sales Associate @ Ku Cha House of Tea (_2022 - 2023)**
 
-## Projects
-### Data-Driven EEG Band Discovery with Decision Trees
+## Classwork
+### Car Classification Neural Network
 [Publication](https://www.mdpi.com/1424-8220/22/8/3048)
 
-Developed objective strategy for discovering optimal EEG bands based on signal power spectra using **Python**. This data-driven approach led to better characterization of the underlying power spectrum by identifying bands that outperformed the more commonly used band boundaries by a factor of two. The proposed method provides a fully automated and flexible approach to capturing key signal components and possibly discovering new indices of brain activity.
+Developed a three-layer neural network for carbody classification using a car sales dataset, demonstrating proficiency in deep learning and big data handling. Implemented data preprocessing techniques, including conversion to float tensors and removal of categorical data, showcasing strong data manipulation skills. Achieved significant accuracy levels through multiple training cycles, highlighting expertise in model optimization and neural network architecture design for real-world applications.
 
 ![EEG Band Discovery](/assets/img/eeg_band_discovery.jpeg)
 
-### Decoding Physical and Cognitive Impacts of Particulate Matter Concentrations at Ultra-Fine Scales
+### Exploratory Data Science Project
 [Publication](https://www.mdpi.com/1424-8220/22/11/4240)
 
-Used **Matlab** to train over 100 machine learning models which estimated particulate matter concentrations based on a suite of over 300 biometric variables. We found biometric variables can be used to accurately estimate particulate matter concentrations at ultra-fine spatial scales with high fidelity (r2 = 0.91) and that smaller particles are better estimated than larger ones. Inferring environmental conditions solely from biometric measurements allows us to disentangle key interactions between the environment and the body.
+Conducted a comprehensive class project utilizing advanced multiple regression techniques to predict gene-environment indicators, demonstrating proficiency in statistical analysis. Employed a  exploratory data science approach on a complete dataset, showcasing strong data handling and analytical skills. Successfully identified significant associations up to the second degree in gene-environment interactions through beta testing, indicating an ability to derive meaningful insights from complex biological data.
 
 ![Bike Study](/assets/img/bike_study.jpeg)
+
+## Projects
 
 
