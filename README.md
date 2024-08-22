@@ -6,7 +6,7 @@
 B.S., Applied Math and Statistics, 2nd major Information Systems | SUNY Stony Brook (_2022-present_)
 
 ## Work Experience
-**Teaching Assistant - Linear Algebra (_Dec-May 2024_)**
+**Teaching Assistant to Prof. Hyun-Kyung Lim - AMS210: Linear Algebra (_Dec-May 2024_)**
 
 **Expo @ Chuy's Tex Mex (_June-Present_)**
 
