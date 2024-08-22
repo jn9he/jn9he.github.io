@@ -12,7 +12,7 @@ B.S., Applied Math and Statistics, 2nd major Information Systems | SUNY Stony Br
 
 ## Classwork
 ### Car Classification Neural Network
-[View Here](https://www.mdpi.com/1424-8220/22/8/3048)
+[View Here](https://github.com/jn9he/car_nn/tree/main)
 
 Developed a three-layer neural network for carbody classification using a car sales dataset, demonstrating proficiency in deep learning and big data handling. Implemented data preprocessing techniques, including conversion to float tensors and removal of categorical data, showcasing strong data manipulation skills. Achieved significant accuracy levels through multiple training cycles, highlighting expertise in model optimization and neural network architecture design for real-world applications.
 
