@@ -1,12 +1,14 @@
-# About
+# About Me
 
-#### Technical Skills: Python, SQL, MATLAB
+#### Technical Skills: Python, R, SQL, MATLAB, Machine Learning, Statistics
 
 ## Education			        		
 B.S., Applied Math and Statistics, 2nd major Information Systems | SUNY Stony Brook (_2022-present_)
 
 ## Work Experience
 **Teaching Assistant - Linear Algebra (_Dec-May 2024_)**
+
+**Expo @ Chuy's Tex Mex (_June-Present_)**
 
 **Retail Sales Associate @ Ku Cha House of Tea (_2022 - 2023_)**
 
