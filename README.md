@@ -19,9 +19,9 @@ Developed a three-layer neural network for carbody classification using a car sa
 
 Conducted a comprehensive class project utilizing advanced multiple regression techniques to predict gene-environment indicators, demonstrating proficiency in statistical analysis. Employed a  exploratory data science approach on a complete dataset, showcasing strong data handling and analytical skills. Successfully identified significant associations up to the second degree in gene-environment interactions through beta testing, indicating an ability to derive meaningful insights from complex biological data.
 
-## Work
+## Work Experience
 
-**Expo @ Chuy's Tex Mex (_June-Present_)**
+**Expo @ Chuy's Tex Mex (_June-August 2024)**
 
 **Retail Sales Associate @ Ku Cha House of Tea (_2022 - 2023_)**
 
