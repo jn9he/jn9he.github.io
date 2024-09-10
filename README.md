@@ -27,7 +27,7 @@ Conducted a comprehensive class project utilizing advanced multiple regression t
 
 # Personal Projects
 
-### Python/Flask Cryptocurrency Application
+### Social Media Notes Fullstack Application
 
 ### Exploratory Data Science Project
 
