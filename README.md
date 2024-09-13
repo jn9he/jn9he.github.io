@@ -6,7 +6,6 @@
 B.S., Applied Math and Statistics, 2nd major Information Systems | SUNY Stony Brook (_2022-present_)
 
 # Experience
-**Remote AI Trainer - Outlier AI (Present)**
 
 **Teaching Assistant to Prof. Hyun-Kyung Lim - AMS210: Linear Algebra (_Dec-May 2024_)**
 
