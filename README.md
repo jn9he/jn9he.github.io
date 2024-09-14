@@ -3,7 +3,7 @@
 #### Technical Skills: Python, R, SQL, MATLAB, Machine Learning, Statistics
 
 # Education			        		
-**B.S., Applied Math and Statistics, 2nd major Information Systems | SUNY Stony Brook (_2022-present_)** 
+**SUNY Stony Brook | BS Applied Math and Statistics, 2nd major Information Systems | (_2022-2026 expected_)** 
 
 # Experience
 
