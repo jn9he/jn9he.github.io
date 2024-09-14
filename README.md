@@ -7,6 +7,8 @@ B.S., Applied Math and Statistics, 2nd major Information Systems | SUNY Stony Br
 
 # Experience
 
+**Remote AI Trainer (contract) - Outlier AI (_present_)**
+
 **Teaching Assistant to Prof. Hyun-Kyung Lim - AMS210: Linear Algebra (_Dec-May 2024_)**
 
 # Classwork
@@ -28,7 +30,7 @@ Conducted a comprehensive class project utilizing advanced multiple regression t
 
 # Personal Projects
 
-### Social Media Notes Fullstack Application
+### Sticky Notes: Social Media Fullstack Web Application
 
 ### Exploratory Data Science Project
 
