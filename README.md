@@ -24,9 +24,9 @@ Conducted a comprehensive class project utilizing advanced multiple regression t
 
 # Work Experience
 
-**Expo @ Chuy's Tex Mex (_June-August 2024)**
+**Expo @ Chuy's Tex Mex (_June-August 2024_)**
 
-**Retail Sales Associate @ Ku Cha House of Tea (_2022 - 2023_)**
+**Tea Sales Associate @ Ku Cha House of Tea (_2022 - 2023_)**
 
 # Personal Projects
 
