@@ -2,12 +2,12 @@
 title: "Velocity"
 date: "07/2026"
 category: "Data Science"
-thumbnail: "https://placehold.co/800x1000/1a1a1a/333333?text=Velocity"
+thumbnail: "/images/project-velocity.jpg"
 description: "Predictive modeling pipeline for customer churn analysis using gradient boosting and survival models."
 images:
-  - "https://placehold.co/1200x800/1a1a1a/333333?text=Velocity+01"
-  - "https://placehold.co/1200x800/1a1a1a/333333?text=Velocity+02"
-  - "https://placehold.co/1200x800/1a1a1a/333333?text=Velocity+03"
+  - "/images/gallery-01.jpg"
+  - "/images/gallery-02.jpg"
+  - "/images/gallery-03.jpg"
 ---
 
 ## Overview

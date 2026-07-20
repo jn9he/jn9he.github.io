@@ -2,12 +2,12 @@
 title: "Bloom"
 date: "04/2026"
 category: "Design"
-thumbnail: "https://placehold.co/800x1000/181818/383838?text=Bloom"
+thumbnail: "/images/project-bloom.jpg"
 description: "Course dashboard redesign with data visualization focus, improving student engagement metrics by 30%."
 images:
-  - "https://placehold.co/1200x800/181818/383838?text=Bloom+01"
-  - "https://placehold.co/1200x800/181818/383838?text=Bloom+02"
-  - "https://placehold.co/1200x800/181818/383838?text=Bloom+03"
+  - "/images/gallery-01.jpg"
+  - "/images/gallery-02.jpg"
+  - "/images/gallery-03.jpg"
 ---
 
 ## Overview

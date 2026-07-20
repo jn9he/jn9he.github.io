@@ -2,12 +2,12 @@
 title: "Neon"
 date: "11/2025"
 category: "Statistics"
-thumbnail: "https://placehold.co/800x1000/191919/393939?text=Neon"
+thumbnail: "/images/project-neon.jpg"
 description: "Causal inference study on the effect of remote learning on student performance using difference-in-differences."
 images:
-  - "https://placehold.co/1200x800/191919/393939?text=Neon+01"
-  - "https://placehold.co/1200x800/191919/393939?text=Neon+02"
-  - "https://placehold.co/1200x800/191919/393939?text=Neon+03"
+  - "/images/gallery-01.jpg"
+  - "/images/gallery-02.jpg"
+  - "/images/gallery-03.jpg"
 ---
 
 ## Overview

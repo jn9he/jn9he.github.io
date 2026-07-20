@@ -2,12 +2,12 @@
 title: "Drift"
 date: "06/2026"
 category: "Statistics"
-thumbnail: "https://placehold.co/800x1000/1c1c1c/404040?text=Drift"
+thumbnail: "/images/project-drift.jpg"
 description: "Bayesian A/B testing framework with sequential analysis for faster experiment decisions."
 images:
-  - "https://placehold.co/1200x800/1c1c1c/404040?text=Drift+01"
-  - "https://placehold.co/1200x800/1c1c1c/404040?text=Drift+02"
-  - "https://placehold.co/1200x800/1c1c1c/404040?text=Drift+03"
+  - "/images/gallery-01.jpg"
+  - "/images/gallery-02.jpg"
+  - "/images/gallery-03.jpg"
 ---
 
 ## Overview

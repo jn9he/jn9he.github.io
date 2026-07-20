@@ -2,12 +2,12 @@
 title: "Cobalt"
 date: "12/2025"
 category: "Data Science"
-thumbnail: "https://placehold.co/800x1000/161616/363636?text=Cobalt"
+thumbnail: "/images/project-cobalt.jpg"
 description: "Recommendation engine for academic course selection using collaborative filtering and content-based methods."
 images:
-  - "https://placehold.co/1200x800/161616/363636?text=Cobalt+01"
-  - "https://placehold.co/1200x800/161616/363636?text=Cobalt+02"
-  - "https://placehold.co/1200x800/161616/363636?text=Cobalt+03"
+  - "/images/gallery-01.jpg"
+  - "/images/gallery-02.jpg"
+  - "/images/gallery-03.jpg"
 ---
 
 ## Overview

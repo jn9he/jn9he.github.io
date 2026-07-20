@@ -2,12 +2,12 @@
 title: "Flux"
 date: "02/2026"
 category: "Statistics"
-thumbnail: "https://placehold.co/800x1000/121212/303030?text=Flux"
+thumbnail: "/images/project-flux.jpg"
 description: "Time series forecasting for retail demand planning using hierarchical models and ensemble methods."
 images:
-  - "https://placehold.co/1200x800/121212/303030?text=Flux+01"
-  - "https://placehold.co/1200x800/121212/303030?text=Flux+02"
-  - "https://placehold.co/1200x800/121212/303030?text=Flux+03"
+  - "/images/gallery-01.jpg"
+  - "/images/gallery-02.jpg"
+  - "/images/gallery-03.jpg"
 ---
 
 ## Overview

@@ -2,12 +2,12 @@
 title: "Solace"
 date: "01/2026"
 category: "Design"
-thumbnail: "https://placehold.co/800x1000/1e1e1e/3e3e3e?text=Solace"
+thumbnail: "/images/project-solace.jpg"
 description: "Data visualization system for public health metrics with accessible, responsive interactive charts."
 images:
-  - "https://placehold.co/1200x800/1e1e1e/3e3e3e?text=Solace+01"
-  - "https://placehold.co/1200x800/1e1e1e/3e3e3e?text=Solace+02"
-  - "https://placehold.co/1200x800/1e1e1e/3e3e3e?text=Solace+03"
+  - "/images/gallery-01.jpg"
+  - "/images/gallery-02.jpg"
+  - "/images/gallery-03.jpg"
 ---
 
 ## Overview

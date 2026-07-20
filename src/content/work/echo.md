@@ -2,12 +2,12 @@
 title: "Echo"
 date: "03/2026"
 category: "Data Science"
-thumbnail: "https://placehold.co/800x1000/151515/353535?text=Echo"
+thumbnail: "/images/project-echo.jpg"
 description: "Natural language processing pipeline for sentiment analysis on customer feedback at scale."
 images:
-  - "https://placehold.co/1200x800/151515/353535?text=Echo+01"
-  - "https://placehold.co/1200x800/151515/353535?text=Echo+02"
-  - "https://placehold.co/1200x800/151515/353535?text=Echo+03"
+  - "/images/gallery-01.jpg"
+  - "/images/gallery-02.jpg"
+  - "/images/gallery-03.jpg"
 ---
 
 ## Overview
