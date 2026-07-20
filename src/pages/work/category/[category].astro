@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Gallery from '../../../components/Gallery';
+import ProjectList from '../../../components/ProjectList';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -31,10 +31,7 @@ const projects = sortedWorks.map(work => ({
   date: work.data.date,
   category: work.data.category,
   thumbnail: work.data.thumbnail,
-  description: work.data.description,
 }));
-
-const categories = [...new Set(works.map(w => w.data.category))].sort();
 ---
 
 <BaseLayout title={`${categoryName} — Joshua Nghe`}>
@@ -45,7 +42,7 @@ const categories = [...new Set(works.map(w => w.data.category))].sort();
         <h1 class="work-page__title">{categoryName}</h1>
       </header>
 
-      <Gallery projects={projects} categories={categories} client:load />
+      <ProjectList projects={projects} client:load />
     </div>
   </section>
 </BaseLayout>
@@ -71,6 +68,6 @@ const categories = [...new Set(works.map(w => w.data.category))].sort();
   .work-page__title {
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 400;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
   }
 </style>

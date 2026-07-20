@@ -1,0 +1,79 @@
+---
+---
+
+<div class="profile-badge">
+  <div class="profile-badge__avatar">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+  </div>
+  <div class="profile-badge__info">
+    <span class="profile-badge__name">Joshua Nghe</span>
+    <span class="profile-badge__role">Statistics · Data Science · Design</span>
+  </div>
+</div>
+
+<style>
+  .profile-badge {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem 0.75rem 0.75rem;
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    transition: opacity 0.3s ease;
+  }
+
+  :global([data-theme="light"]) .profile-badge {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .profile-badge__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .profile-badge__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .profile-badge__name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .profile-badge__role {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 480px) {
+    .profile-badge {
+      display: none;
+    }
+  }
+</style>
