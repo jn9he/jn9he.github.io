@@ -1,12 +1,23 @@
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
-Gemfile.lock
+# dependencies
 node_modules/
-vendor/
-.bundle/
+
+# build output
+dist/
+
+# astro generated
+.astro/
+
+# environment
+.env
+.env.*
+
+# OS
 .DS_Store
 Thumbs.db
-*.swp
-*.swo
+
+# logs
+*.log
+
+# editor
+.vscode/
+.idea/

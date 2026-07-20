@@ -1,0 +1,271 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollReveal from '../../components/ScrollReveal';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const works = await getCollection('work');
+  return works.map(work => ({
+    params: { slug: work.id },
+    props: { work },
+  }));
+}
+
+const { work } = Astro.props;
+const { Content } = await render(work);
+
+const allWorks = await getCollection('work');
+const sortedWorks = allWorks.sort((a, b) => {
+  const parseDate = (d: string) => {
+    const [month, year] = d.split('/');
+    return new Date(parseInt(year), parseInt(month) - 1);
+  };
+  return parseDate(b.data.date).getTime() - parseDate(a.data.date).getTime();
+});
+
+const currentIndex = sortedWorks.findIndex(w => w.id === work.id);
+const prevWork = currentIndex > 0 ? sortedWorks[currentIndex - 1] : null;
+const nextWork = currentIndex < sortedWorks.length - 1 ? sortedWorks[currentIndex + 1] : null;
+---
+
+<BaseLayout title={`${work.data.title} — Joshua Nghe`} description={work.data.description}>
+  <article class="project section">
+    <div class="container">
+      <!-- Header -->
+      <ScrollReveal client:visible>
+        <header class="project__header">
+          <a href="/work" class="project__back">← Back to Work</a>
+          <h1 class="project__title">{work.data.title}</h1>
+          <div class="project__meta">
+            <span class="project__date">{work.data.date}</span>
+            <span class="project__divider">·</span>
+            <span class="project__category">{work.data.category}</span>
+          </div>
+          <p class="project__description">{work.data.description}</p>
+        </header>
+      </ScrollReveal>
+
+      <!-- Hero Image -->
+      <ScrollReveal delay={0.15} client:visible>
+        <div class="project__hero-image">
+          <img src={work.data.thumbnail} alt={work.data.title} />
+        </div>
+      </ScrollReveal>
+
+      <!-- Content -->
+      <ScrollReveal delay={0.1} client:visible>
+        <div class="project__content">
+          <Content />
+        </div>
+      </ScrollReveal>
+
+      <!-- Image Gallery -->
+      {work.data.images && work.data.images.length > 0 && (
+        <div class="project__gallery">
+          {work.data.images.map((image: string, i: number) => (
+            <ScrollReveal delay={i * 0.1} client:visible>
+              <div class="project__gallery-item">
+                <img src={image} alt={`${work.data.title} — Image ${i + 1}`} />
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      )}
+
+      <!-- Navigation -->
+      <nav class="project__nav">
+        {prevWork && (
+          <a href={`/work/${prevWork.id}`} class="project__nav-link project__nav-link--prev">
+            <span class="project__nav-label">Previous</span>
+            <span class="project__nav-title">{prevWork.data.title}</span>
+          </a>
+        )}
+        {nextWork && (
+          <a href={`/work/${nextWork.id}`} class="project__nav-link project__nav-link--next">
+            <span class="project__nav-label">Next</span>
+            <span class="project__nav-title">{nextWork.data.title}</span>
+          </a>
+        )}
+      </nav>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project__header {
+    max-width: 720px;
+    margin-bottom: 3rem;
+  }
+
+  .project__back {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    transition: color var(--transition);
+  }
+
+  .project__back:hover {
+    color: var(--text);
+    opacity: 1;
+  }
+
+  .project__title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .project__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .project__divider {
+    opacity: 0.4;
+  }
+
+  .project__category {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  .project__description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .project__hero-image {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 4rem;
+    background: var(--bg-secondary);
+  }
+
+  .project__hero-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+  }
+
+  .project__content {
+    max-width: 720px;
+    margin-bottom: 4rem;
+  }
+
+  .project__content :global(h2) {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .project__content :global(h3) {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .project__content :global(p) {
+    margin-bottom: 1.25rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .project__content :global(ul),
+  .project__content :global(ol) {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  .project__content :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+
+  .project__gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .project__gallery-item {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-secondary);
+  }
+
+  .project__gallery-item img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+  }
+
+  /* Navigation */
+  .project__nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .project__nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-decoration: none;
+    transition: opacity var(--transition);
+  }
+
+  .project__nav-link:hover {
+    opacity: 0.7;
+  }
+
+  .project__nav-link--next {
+    text-align: right;
+    margin-left: auto;
+  }
+
+  .project__nav-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  .project__nav-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  @media (max-width: 768px) {
+    .project__gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .project__nav {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .project__nav-link--next {
+      text-align: left;
+    }
+  }
+</style>

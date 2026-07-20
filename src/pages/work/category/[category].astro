@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Gallery from '../../../components/Gallery';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const works = await getCollection('work');
+  const categories = [...new Set(works.map(w => w.data.category))];
+
+  return categories.map(category => ({
+    params: { category: category.toLowerCase().replace(/\s+/g, '-') },
+    props: { categoryName: category },
+  }));
+}
+
+const { categoryName } = Astro.props;
+const works = await getCollection('work');
+const sortedWorks = works
+  .filter(w => w.data.category === categoryName)
+  .sort((a, b) => {
+    const parseDate = (d: string) => {
+      const [month, year] = d.split('/');
+      return new Date(parseInt(year), parseInt(month) - 1);
+    };
+    return parseDate(b.data.date).getTime() - parseDate(a.data.date).getTime();
+  });
+
+const projects = sortedWorks.map(work => ({
+  id: work.id,
+  title: work.data.title,
+  date: work.data.date,
+  category: work.data.category,
+  thumbnail: work.data.thumbnail,
+  description: work.data.description,
+}));
+
+const categories = [...new Set(works.map(w => w.data.category))].sort();
+---
+
+<BaseLayout title={`${categoryName} — Joshua Nghe`}>
+  <section class="work-page section">
+    <div class="container">
+      <header class="work-page__header">
+        <a href="/work" class="work-page__back">← All Work</a>
+        <h1 class="work-page__title">{categoryName}</h1>
+      </header>
+
+      <Gallery projects={projects} categories={categories} client:load />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .work-page__header {
+    margin-bottom: 3rem;
+  }
+
+  .work-page__back {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    transition: color var(--transition);
+  }
+
+  .work-page__back:hover {
+    color: var(--text);
+    opacity: 1;
+  }
+
+  .work-page__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+</style>

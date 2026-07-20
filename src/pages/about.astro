@@ -1,0 +1,166 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ScrollReveal from '../components/ScrollReveal';
+---
+
+<BaseLayout title="About — Joshua Nghe">
+  <section class="about section">
+    <div class="container">
+      <ScrollReveal client:visible>
+        <header class="about__header">
+          <h1 class="about__title">Meet Joshua</h1>
+        </header>
+      </ScrollReveal>
+
+      <div class="about__content">
+        <ScrollReveal delay={0.1} client:visible>
+          <p class="about__lead">
+            I'm <strong>Joshua Nghe</strong>, a statistics undergraduate with minors in Data Science and Design, exploring the intersection of rigorous analysis and visual storytelling.
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.2} client:visible>
+          <p>
+            I believe that data, when treated with care and presented with intention, has the power to change how people understand the world. Every visualization is an invitation to look closer, every model an attempt to capture something real about the patterns that shape our lives.
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.3} client:visible>
+          <p>
+            I work across the full spectrum — from statistical modeling and machine learning to information design and user experience. My approach values clarity over complexity, and I aim to create work that feels both rigorous and accessible.
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.4} client:visible>
+          <div class="about__details">
+            <div class="about__detail-group">
+              <h3>Focus Areas</h3>
+              <ul>
+                <li>Statistical Modeling & Inference</li>
+                <li>Machine Learning & Prediction</li>
+                <li>Data Visualization & Design</li>
+                <li>Experimental Design & A/B Testing</li>
+              </ul>
+            </div>
+
+            <div class="about__detail-group">
+              <h3>Tools</h3>
+              <ul>
+                <li>R · Python · SQL</li>
+                <li>tidyverse · scikit-learn · PyTorch</li>
+                <li>D3.js · ggplot2 · Tableau</li>
+                <li>Figma · Framer</li>
+              </ul>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.5} client:visible>
+          <div class="about__cta">
+            <p>Currently open to interesting collaborations and opportunities.</p>
+            <a href="/contact" class="about__link">Get in touch →</a>
+          </div>
+        </ScrollReveal>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .about__header {
+    margin-bottom: 3rem;
+  }
+
+  .about__title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+  }
+
+  .about__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .about__lead {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .about__lead strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .about__content p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .about__details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .about__detail-group h3 {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .about__detail-group ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .about__detail-group li {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .about__cta {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .about__cta p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .about__link {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    transition: opacity var(--transition);
+  }
+
+  .about__link:hover {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 640px) {
+    .about__details {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
