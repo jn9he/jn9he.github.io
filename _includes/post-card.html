@@ -1,0 +1,24 @@
+<!-- Post Card -->
+<div class="col-lg-6 mb-4">
+    <div class="card border-0 shadow-sm h-100">
+        {% if post.image %}
+        <a href="{{ site.baseurl }}{{ post.url }}">
+            <img class="card-img-top" src="{% if post.image contains 'http' %}{{ post.image }}{% else %}{{ site.baseurl }}/{{ post.image }}{% endif %}" alt="{{ post.title }}">
+        </a>
+        {% endif %}
+        <div class="card-body">
+            <div class="mb-2">
+                {% for category in post.categories %}
+                <a href="{{ site.baseurl }}/categories.html#{{ category | downcase }}" class="badge badge-primary">{{ category }}</a>
+                {% endfor %}
+            </div>
+            <h5 class="card-title">
+                <a href="{{ site.baseurl }}{{ post.url }}" class="text-dark">{{ post.title }}</a>
+            </h5>
+            <p class="card-text text-muted">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+        </div>
+        <div class="card-footer bg-white border-0">
+            <small class="text-muted">{{ post.date | date: '%b %d, %Y' }}</small>
+        </div>
+    </div>
+</div>

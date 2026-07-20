@@ -1,0 +1,33 @@
+<footer class="footer bg-dark text-light py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h5>{{ site.name }}</h5>
+                <p class="text-muted">{{ site.description }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    {% for item in site.navigation %}
+                    <li><a href="{{ site.baseurl }}{{ item.url }}" class="text-muted">{{ item.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Connect</h5>
+                <div class="social-links">
+                    <a href="https://github.com/jn9he" class="text-muted mr-3" aria-label="GitHub"><i class="fab fa-github fa-lg"></i></a>
+                    {% if site.authors.jn9he.email != '' %}
+                    <a href="mailto:{{ site.authors.jn9he.email }}" class="text-muted mr-3" aria-label="Email"><i class="fas fa-envelope fa-lg"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="text-muted mb-0">&copy; {{ 'now' | date: '%Y' }} {{ site.name }}. Built with <a href="https://jekyllrb.com" class="text-muted">Jekyll</a> &amp; <a href="https://github.com/codebygina/mundana-theme-jekyll" class="text-muted">Mundana Theme</a>.</p>
+            </div>
+        </div>
+    </div>
+</footer>

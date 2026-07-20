@@ -1,0 +1,83 @@
+---
+layout: default
+---
+
+{% assign author = site.authors[page.author] %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <article class="post-content py-5">
+                <!-- Categories -->
+                <div class="post-categories mb-2">
+                    {% for category in page.categories %}
+                    <a href="{{ site.baseurl }}/categories.html#{{ category | downcase }}" class="badge badge-primary">{{ category }}</a>
+                    {% endfor %}
+                </div>
+
+                <!-- Title -->
+                <h1 class="post-title mb-3">{{ page.title }}</h1>
+
+                <!-- Meta -->
+                <div class="post-meta d-flex align-items-center mb-4">
+                    {% if author %}
+                    <div class="author-info d-flex align-items-center">
+                        {% if author.avatar %}
+                        <img src="{{ site.baseurl }}{{ author.avatar }}" alt="{{ author.name }}" class="rounded-circle mr-2" width="40" height="40">
+                        {% endif %}
+                        <span class="author-name font-weight-bold">{{ author.name }}</span>
+                    </div>
+                    {% endif %}
+                    <span class="mx-2">&middot;</span>
+                    <span class="post-date text-muted">{{ page.date | date: '%b %d, %Y' }}</span>
+                </div>
+
+                <!-- Featured Image -->
+                {% if page.image %}
+                <div class="post-image mb-4">
+                    <img src="{% if page.image contains 'http' %}{{ page.image }}{% else %}{{ site.baseurl }}/{{ page.image }}{% endif %}" alt="{{ page.title }}" class="img-fluid rounded">
+                </div>
+                {% endif %}
+
+                <!-- Content -->
+                <div class="post-body">
+                    {{ content }}
+                </div>
+
+                <!-- Tags -->
+                {% if page.tags.size > 0 %}
+                <div class="post-tags mt-4 pt-3 border-top">
+                    {% for tag in page.tags %}
+                    <a href="{{ site.baseurl }}/tags.html#{{ tag | downcase }}" class="badge badge-light mr-1">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Author Box -->
+                {% if author %}
+                <div class="author-box mt-5 p-4 bg-light rounded">
+                    <div class="d-flex align-items-start">
+                        {% if author.avatar %}
+                        <img src="{{ site.baseurl }}{{ author.avatar }}" alt="{{ author.name }}" class="rounded-circle mr-3" width="60" height="60">
+                        {% endif %}
+                        <div>
+                            <h5 class="mb-1">{{ author.name }}</h5>
+                            <p class="text-muted mb-0">{{ author.bio }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Post Navigation -->
+                <div class="post-navigation mt-5 d-flex justify-content-between">
+                    {% if page.previous.url %}
+                    <a href="{{ site.baseurl }}{{ page.previous.url }}" class="btn btn-outline-primary">&larr; {{ page.previous.title | truncate: 30 }}</a>
+                    {% endif %}
+                    {% if page.next.url %}
+                    <a href="{{ site.baseurl }}{{ page.next.url }}" class="btn btn-outline-primary ml-auto">{{ page.next.title | truncate: 30 }} &rarr;</a>
+                    {% endif %}
+                </div>
+            </article>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+# Site
+name: 'Statistics & Data Science Portfolio'
+description: 'Portfolio showcasing work in statistics, data science, and design.'
+logo: 'assets/images/logo.svg'
+favicon: 'assets/images/favicon.ico'
+baseurl: ''
+url: 'https://jn9he.github.io'
+email: ''
+include: ["_pages"]
+permalink: /:title/
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-seo-tag
+
+# Authors
+authors:
+  jn9he:
+    name: JN
+    site: https://jn9he.github.io
+    avatar: /assets/images/avatar.svg
+    bio: "Statistics undergraduate with minors in Data Science and Design. Passionate about turning data into actionable insights and beautiful visualizations."
+    email: ''
+    github: https://github.com/jn9he
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: Projects
+    url: /projects
+  - title: About
+    url: /about
+  - title: Categories
+    url: /categories
+
+# Defaults
+defaults:
+  # all posts
+  - scope:
+      path: "_posts"
+    values:
+      layout: post
+      author: jn9he
+      avatar: /assets/images/avatar.svg
+  # all pages
+  - scope:
+      path: "_pages"
+    values:
+      layout: page
+
+# Syntax
+markdown: kramdown
+highlighter: rouge
+
+# Paginate
+paginate: 6
+
+# Exclude
+exclude: [README.md, package.json, node_modules, Gemfile.lock]

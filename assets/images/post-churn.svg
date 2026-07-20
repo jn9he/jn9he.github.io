@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#1e293b"/>
+  <text x="400" y="180" font-family="Arial" font-size="28" font-weight="bold" fill="#4A6CF7" text-anchor="middle">Customer Churn Prediction</text>
+  <text x="400" y="220" font-family="Arial" font-size="16" fill="#94a3b8" text-anchor="middle">Gradient Boosting Classifier — 89% Accuracy</text>
+  <!-- Bar chart suggestion -->
+  <rect x="200" y="260" width="60" height="100" fill="#4A6CF7" rx="4" opacity="0.8"/>
+  <rect x="280" y="280" width="60" height="80" fill="#4A6CF7" rx="4" opacity="0.6"/>
+  <rect x="360" y="300" width="60" height="60" fill="#4A6CF7" rx="4" opacity="0.5"/>
+  <rect x="440" y="310" width="60" height="50" fill="#22c55e" rx="4" opacity="0.6"/>
+  <rect x="520" y="320" width="60" height="40" fill="#22c55e" rx="4" opacity="0.5"/>
+</svg>

@@ -1,0 +1,78 @@
+---
+title: "Projects"
+layout: default
+permalink: /projects
+---
+
+<div class="container py-5">
+    <h1 class="mb-2">Projects</h1>
+    <p class="lead text-muted mb-5">A selection of work across statistics, data science, and design.</p>
+
+    <!-- Filter Buttons -->
+    <div class="project-filters mb-4">
+        <button class="btn btn-primary btn-sm active mr-1" data-filter="all">All</button>
+        <button class="btn btn-outline-primary btn-sm mr-1" data-filter="statistics">Statistics</button>
+        <button class="btn btn-outline-primary btn-sm mr-1" data-filter="data-science">Data Science</button>
+        <button class="btn btn-outline-primary btn-sm mr-1" data-filter="design">Design</button>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="row">
+        {% for post in site.posts %}
+        <div class="col-md-6 col-lg-4 mb-4 project-item {% for cat in post.categories %}{{ cat | downcase | replace: ' ', '-' }} {% endfor %}">
+            <div class="card border-0 shadow-sm h-100">
+                {% if post.image %}
+                <a href="{{ site.baseurl }}{{ post.url }}">
+                    <img class="card-img-top" src="{% if post.image contains 'http' %}{{ post.image }}{% else %}{{ site.baseurl }}/{{ post.image }}{% endif %}" alt="{{ post.title }}">
+                </a>
+                {% endif %}
+                <div class="card-body">
+                    <div class="mb-2">
+                        {% for category in post.categories %}
+                        <span class="badge badge-primary">{{ category }}</span>
+                        {% endfor %}
+                    </div>
+                    <h5 class="card-title">
+                        <a href="{{ site.baseurl }}{{ post.url }}" class="text-dark">{{ post.title }}</a>
+                    </h5>
+                    <p class="card-text text-muted small">{{ post.excerpt | strip_html | truncate: 100 }}</p>
+                    {% if post.tools %}
+                    <div class="project-tools mt-2">
+                        {% for tool in post.tools %}
+                        <span class="badge badge-light">{{ tool }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <a href="{{ site.baseurl }}{{ post.url }}" class="btn btn-sm btn-outline-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.project-filters button');
+    const items = document.querySelectorAll('.project-item');
+
+    buttons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            buttons.forEach(function(b) { b.classList.remove('active'); b.classList.add('btn-outline-primary'); b.classList.remove('btn-primary'); });
+            this.classList.add('active', 'btn-primary');
+            this.classList.remove('btn-outline-primary');
+
+            const filter = this.getAttribute('data-filter');
+            items.forEach(function(item) {
+                if (filter === 'all' || item.classList.contains(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
