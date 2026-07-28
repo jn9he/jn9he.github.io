@@ -3,8 +3,8 @@ import * as THREE from 'three';
 import { useThree, useFrame } from '@react-three/fiber';
 import { SimulationMaterial } from './SimulationMaterial';
 
-const FBO_WIDTH = 32;
-const FBO_HEIGHT = 16;
+const FBO_WIDTH = 64;
+const FBO_HEIGHT = 32;
 const PARTICLE_COUNT = FBO_WIDTH * FBO_HEIGHT; // 512
 
 /**

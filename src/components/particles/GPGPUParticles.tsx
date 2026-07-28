@@ -34,7 +34,7 @@ export default function GPGPUParticles() {
     nextFamily: familyNames[Math.floor(Math.random() * familyNames.length)],
     transitionProgress: 0,
     lastSwitch: 0,
-    switchInterval: 15 + Math.random() * 15,
+    switchInterval: 8 + Math.random() * 7,
   });
 
   const attractorRef = useRef({
@@ -43,9 +43,9 @@ export default function GPGPUParticles() {
     strength: 0,
     targetStrength: 0,
     holdStart: 0,
-    holdDuration: 3,
+    holdDuration: 5,
     lastTrigger: 0,
-    triggerInterval: 55 + Math.random() * 35,
+    triggerInterval: 12 + Math.random() * 8,
     phase: 'idle' as 'idle' | 'forming' | 'holding' | 'dissolving',
   });
 
@@ -78,14 +78,14 @@ export default function GPGPUParticles() {
       uniforms: {
         uPositions: { value: null },
         uResolution: { value: new THREE.Vector2(fboWidth, fboHeight) },
-        uPointSize: { value: 22.0 },
+        uPointSize: { value: 80.0 },
         uAspect: { value: viewport.aspect },
         uColor1: { value: hexToColor(initialPalette[0]) },
         uColor2: { value: hexToColor(initialPalette[1]) },
         uColor3: { value: hexToColor(initialPalette[2]) },
         uColor4: { value: hexToColor(initialPalette[3]) },
         uColor5: { value: hexToColor(initialPalette[4]) },
-        uOpacity: { value: 0.7 },
+        uOpacity: { value: 0.4 },
         uIsDark: { value: 1.0 },
       },
       transparent: true,
@@ -109,7 +109,7 @@ export default function GPGPUParticles() {
       ps.nextFamily = next;
       ps.transitionProgress = 0;
       ps.lastSwitch = elapsed;
-      ps.switchInterval = 15 + Math.random() * 15;
+      ps.switchInterval = 8 + Math.random() * 7;
     }
 
     if (ps.transitionProgress < 1.0) {
@@ -127,13 +127,13 @@ export default function GPGPUParticles() {
       const c = lerpColor(hexToColor(currentColors[i]), hexToColor(nextColors[i]), t);
       const hsl = { h: 0, s: 0, l: 0 };
       c.getHSL(hsl);
-      hsl.s = Math.min(1.0, hsl.s * 1.6);
+      hsl.s = Math.min(1.0, hsl.s * 2.0);
       c.setHSL(hsl.h, hsl.s, hsl.l);
       const uniform = material.uniforms[`uColor${i + 1}` as keyof typeof material.uniforms];
       if (uniform) (uniform.value as THREE.Color).copy(c);
     }
 
-    material.uniforms.uOpacity.value = isDark ? 0.7 : 0.5;
+    material.uniforms.uOpacity.value = isDark ? 0.4 : 0.3;
   }, [material]);
 
   const updateAttractors = useCallback((elapsed: number) => {
@@ -148,12 +148,12 @@ export default function GPGPUParticles() {
             att.phase = 'forming';
             att.targetStrength = 1.0;
             att.lastTrigger = elapsed;
-            att.triggerInterval = 55 + Math.random() * 35;
+            att.triggerInterval = 12 + Math.random() * 8;
           }
         }
         break;
       case 'forming':
-        att.strength = Math.min(att.targetStrength, att.strength + 0.004);
+        att.strength = Math.min(att.targetStrength, att.strength + 0.008);
         if (att.strength >= att.targetStrength) {
           att.phase = 'holding';
           att.holdStart = elapsed;
@@ -163,7 +163,7 @@ export default function GPGPUParticles() {
         if (elapsed - att.holdStart > att.holdDuration) att.phase = 'dissolving';
         break;
       case 'dissolving':
-        att.strength = Math.max(0, att.strength - 0.006);
+        att.strength = Math.max(0, att.strength - 0.003);
         if (att.strength <= 0) {
           att.phase = 'idle';
           att.active = false;
@@ -172,9 +172,9 @@ export default function GPGPUParticles() {
         break;
     }
     if (att.points.length > 0 && att.strength > 0) {
-      simMaterial.uniforms.uCenterGravity.value = 0.002 + att.strength * 0.01;
+      simMaterial.uniforms.uCenterGravity.value = 0.006 + att.strength * 0.025;
     } else {
-      simMaterial.uniforms.uCenterGravity.value = 0.002;
+      simMaterial.uniforms.uCenterGravity.value = 0.006;
     }
   }, [simMaterial]);
 

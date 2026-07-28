@@ -12,7 +12,8 @@ varying float vSpeed;
 void main() {
   vec2 center = gl_PointCoord - vec2(0.5);
   float dist = length(center);
-  float alpha = 1.0 - smoothstep(0.1, 0.48, dist);
+  // Very soft gaussian-like falloff for paint/fluid look
+  float alpha = exp(-dist * dist * 8.0);
 
   if (alpha < 0.01) discard;
 
@@ -31,14 +32,14 @@ void main() {
     color = mix(uColor5, uColor1, (colorIndex - 0.8) * 5.0);
   }
 
-  float coreGlow = 1.0 + (1.0 - dist * 2.0) * 0.12;
-  color *= coreGlow;
+  // Velocity-based color shift (faster = slightly brighter, creates depth)
+  color *= 1.0 + vSpeed * 5.0;
 
   if (uIsDark < 0.5) {
-    color *= 0.6;
+    color *= 0.7;
     gl_FragColor = vec4(color, alpha * uOpacity);
   } else {
-    color *= 1.4;
-    gl_FragColor = vec4(color * alpha * uOpacity, alpha * uOpacity);
+    // Additive premultiplied for glowing fluid look
+    gl_FragColor = vec4(color * alpha * uOpacity, alpha * uOpacity * 0.8);
   }
 }

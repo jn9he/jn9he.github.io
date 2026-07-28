@@ -90,7 +90,7 @@ void main(){
   vec2 noisePos=pos*uNoiseScale;
   vec2 flowForce=curlNoise2D(noisePos,timeOff)*uFlowSpeed;
   float driftAngle=phase+uTime*0.02*(0.5+seed);
-  vec2 drift=vec2(cos(driftAngle),sin(driftAngle))*0.0008;
+  vec2 drift=vec2(cos(driftAngle),sin(driftAngle))*0.0003;
   vec2 toCenter=vec2(0.5)-pos;
   vec2 gravityForce=toCenter*uCenterGravity*0.3;
   vec2 structureForce=vec2(0.0);
@@ -116,8 +116,8 @@ void main(){
   if(pos.y<margin)boundaryForce.y=(margin-pos.y)*0.4;
   if(pos.y>1.0-margin)boundaryForce.y=-(pos.y-(1.0-margin))*0.4;
   vec2 acceleration=flowForce+gravityForce+boundaryForce+structureForce+drift;
-  vel=vel*0.88+acceleration*uDelta;
-  float maxSpeed=0.007;
+  vel=vel*0.94+acceleration*uDelta;
+  float maxSpeed=0.012;
   float speed=length(vel);
   if(speed>maxSpeed)vel=vel/speed*maxSpeed;
   pos+=vel;
