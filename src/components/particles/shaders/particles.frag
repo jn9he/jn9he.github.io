@@ -4,19 +4,18 @@ uniform vec3 uColor3;
 uniform vec3 uColor4;
 uniform vec3 uColor5;
 uniform float uOpacity;
+uniform float uIsDark;
 
 varying vec2 vParticleUv;
 varying float vSpeed;
 
 void main() {
-  // Soft circle with smooth edges
   vec2 center = gl_PointCoord - vec2(0.5);
   float dist = length(center);
-  float alpha = 1.0 - smoothstep(0.3, 0.5, dist);
+  float alpha = 1.0 - smoothstep(0.15, 0.5, dist);
 
   if (alpha < 0.01) discard;
 
-  // Color based on particle UV position in texture (creates spatial color variation)
   float colorIndex = fract(vParticleUv.x * 3.7 + vParticleUv.y * 2.3);
 
   vec3 color;
@@ -32,13 +31,13 @@ void main() {
     color = mix(uColor5, uColor1, (colorIndex - 0.8) * 5.0);
   }
 
-  // Brighter core, softer edges
-  float coreBrightness = 1.0 + (1.0 - dist * 2.0) * 0.5;
-  color *= coreBrightness;
+  float coreGlow = 1.0 + (1.0 - dist * 2.0) * 0.08;
+  color *= coreGlow;
 
-  // Speed-based brightness boost
-  float speedGlow = 1.0 + vSpeed * 10.0;
-  color *= speedGlow;
-
-  gl_FragColor = vec4(color, alpha * uOpacity);
+  if (uIsDark < 0.5) {
+    color *= 0.5;
+    gl_FragColor = vec4(color, alpha * uOpacity * 0.8);
+  } else {
+    gl_FragColor = vec4(color, alpha * uOpacity);
+  }
 }

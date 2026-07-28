@@ -12,12 +12,14 @@ export class SimulationMaterial extends THREE.ShaderMaterial {
         uPositions: { value: null },
         uTime: { value: 0 },
         uDelta: { value: 0.016 },
-        uFlowSpeed: { value: 0.4 },
-        uNoiseScale: { value: 0.8 },
-        uNoiseEvolution: { value: 0.08 },
+        uFlowSpeed: { value: 0.25 },
+        uNoiseScale: { value: 1.2 },
+        uNoiseEvolution: { value: 0.04 },
         uSeparationRadius: { value: 0.05 },
-        uCenterGravity: { value: 0.008 },
+        uCenterGravity: { value: 0.002 },
         uResolution: { value: new THREE.Vector2(32, 16) },
+        uStructures: { value: new Array(8).fill(new THREE.Vector4(0, 0, 0, 0)) },
+        uStructureCount: { value: 0 },
       },
     });
   }
