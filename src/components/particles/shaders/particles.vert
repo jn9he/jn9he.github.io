@@ -29,6 +29,6 @@ void main() {
   vec4 mvPosition = modelViewMatrix * vec4(worldPos, 1.0);
   gl_Position = projectionMatrix * mvPosition;
 
-  float sizeVariation = 1.0 + vSpeed * 15.0;
+  float sizeVariation = 1.0 + vSpeed * 5.0;
   gl_PointSize = uPointSize * sizeVariation * (1.0 / -mvPosition.z);
 }
