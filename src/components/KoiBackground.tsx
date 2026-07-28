@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useState, useRef, useCallback } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import * as THREE from 'three';
 import GPGPUParticles from './particles/GPGPUParticles';
 import {
   detectDeviceCapability,
@@ -10,7 +11,26 @@ import {
   type TierConfig,
 } from '../lib/deviceCapability';
 
-/** Bloom wrapper that adapts to theme and tier */
+/** Sets the scene background color based on the current theme */
+function ThemeBackground() {
+  const { scene } = useThree();
+
+  useEffect(() => {
+    const updateBg = () => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      scene.background = new THREE.Color(theme === 'light' ? '#fafaf9' : '#0a0a0a');
+    };
+    updateBg();
+
+    const observer = new MutationObserver(updateBg);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, [scene]);
+
+  return null;
+}
+
+/** Bloom wrapper that adapts to theme */
 function AdaptiveBloom({ intensity }: { intensity: number }) {
   const [isDark, setIsDark] = useState(true);
 
@@ -32,7 +52,7 @@ function AdaptiveBloom({ intensity }: { intensity: number }) {
     <EffectComposer>
       <Bloom
         intensity={effectiveIntensity}
-        luminanceThreshold={isDark ? 0.4 : 0.6}
+        luminanceThreshold={isDark ? 0.3 : 0.5}
         luminanceSmoothing={0.9}
         radius={0.8}
         mipmapBlur
@@ -53,7 +73,6 @@ function VisibilityPauser() {
 
   useFrame((state) => {
     if (!visible) {
-      // Pause the clock when hidden to save resources
       state.clock.stop();
     } else if (!state.clock.running) {
       state.clock.start();
@@ -96,24 +115,18 @@ export default function KoiBackground() {
 
   useEffect(() => {
     const detectedTier = detectDeviceCapability();
+    console.log('[KoiPond] Detected tier:', detectedTier);
     setTier(detectedTier);
     setConfig(TIER_CONFIGS[detectedTier]);
   }, []);
 
   const handleDowngrade = useCallback(() => {
     setTier((current) => {
-      if (current === 'high') {
-        const newTier = 'medium';
-        setConfig(TIER_CONFIGS[newTier]);
-        return newTier;
-      }
-      if (current === 'medium') {
-        const newTier = 'low';
-        setConfig(TIER_CONFIGS[newTier]);
-        return newTier;
-      }
-      // Already at low — switch to CSS fallback
-      const newTier = 'none';
+      let newTier: PerformanceTier;
+      if (current === 'high') newTier = 'medium';
+      else if (current === 'medium') newTier = 'low';
+      else newTier = 'none';
+      console.log('[KoiPond] Downgrading to:', newTier);
       setConfig(TIER_CONFIGS[newTier]);
       return newTier;
     });
@@ -129,10 +142,11 @@ export default function KoiBackground() {
     <div style={{ position: 'fixed', inset: 0, zIndex: -1, pointerEvents: 'none' }}>
       <Canvas
         dpr={config.dpr}
-        gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
+        gl={{ antialias: false, powerPreference: 'high-performance' }}
         camera={{ position: [0, 0, 5], fov: 60 }}
-        frameloop={config.maxFps <= 30 ? 'demand' : 'always'}
+        frameloop="always"
       >
+        <ThemeBackground />
         <Suspense fallback={null}>
           <GPGPUParticles />
           {config.bloom && <AdaptiveBloom intensity={config.bloomIntensity} />}

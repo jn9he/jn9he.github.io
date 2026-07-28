@@ -95,17 +95,15 @@ function hasWebGLSupport(): boolean {
 
   try {
     const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
-    if (!gl) return false;
+    const gl = canvas.getContext('webgl2');
 
-    // Check for float texture support (required for FBO simulation)
-    if (gl instanceof WebGL2RenderingContext) {
-      const ext = gl.getExtension('EXT_color_buffer_float');
-      return ext !== null;
-    }
+    // WebGL2 natively supports float textures — just check it exists
+    if (gl) return true;
 
-    // WebGL 1 fallback check
-    const floatExt = gl.getExtension('OES_texture_float');
+    // WebGL1 fallback — needs OES_texture_float extension
+    const gl1 = canvas.getContext('webgl');
+    if (!gl1) return false;
+    const floatExt = gl1.getExtension('OES_texture_float');
     return floatExt !== null;
   } catch {
     return false;
