@@ -12,7 +12,7 @@ varying float vSpeed;
 void main() {
   vec2 center = gl_PointCoord - vec2(0.5);
   float dist = length(center);
-  float alpha = 1.0 - smoothstep(0.15, 0.5, dist);
+  float alpha = 1.0 - smoothstep(0.1, 0.48, dist);
 
   if (alpha < 0.01) discard;
 
@@ -31,13 +31,14 @@ void main() {
     color = mix(uColor5, uColor1, (colorIndex - 0.8) * 5.0);
   }
 
-  float coreGlow = 1.0 + (1.0 - dist * 2.0) * 0.08;
+  float coreGlow = 1.0 + (1.0 - dist * 2.0) * 0.12;
   color *= coreGlow;
 
   if (uIsDark < 0.5) {
-    color *= 0.5;
-    gl_FragColor = vec4(color, alpha * uOpacity * 0.8);
-  } else {
+    color *= 0.6;
     gl_FragColor = vec4(color, alpha * uOpacity);
+  } else {
+    color *= 1.4;
+    gl_FragColor = vec4(color * alpha * uOpacity, alpha * uOpacity);
   }
 }

@@ -78,18 +78,18 @@ export default function GPGPUParticles() {
       uniforms: {
         uPositions: { value: null },
         uResolution: { value: new THREE.Vector2(fboWidth, fboHeight) },
-        uPointSize: { value: 15.0 },
+        uPointSize: { value: 22.0 },
         uAspect: { value: viewport.aspect },
         uColor1: { value: hexToColor(initialPalette[0]) },
         uColor2: { value: hexToColor(initialPalette[1]) },
         uColor3: { value: hexToColor(initialPalette[2]) },
         uColor4: { value: hexToColor(initialPalette[3]) },
         uColor5: { value: hexToColor(initialPalette[4]) },
-        uOpacity: { value: 0.55 },
+        uOpacity: { value: 0.7 },
         uIsDark: { value: 1.0 },
       },
       transparent: true,
-      blending: THREE.NormalBlending,
+      blending: THREE.AdditiveBlending,
       depthWrite: false,
       depthTest: false,
     });
@@ -127,13 +127,13 @@ export default function GPGPUParticles() {
       const c = lerpColor(hexToColor(currentColors[i]), hexToColor(nextColors[i]), t);
       const hsl = { h: 0, s: 0, l: 0 };
       c.getHSL(hsl);
-      hsl.s = Math.min(1.0, hsl.s * 1.3);
+      hsl.s = Math.min(1.0, hsl.s * 1.6);
       c.setHSL(hsl.h, hsl.s, hsl.l);
       const uniform = material.uniforms[`uColor${i + 1}` as keyof typeof material.uniforms];
       if (uniform) (uniform.value as THREE.Color).copy(c);
     }
 
-    material.uniforms.uOpacity.value = isDark ? 0.55 : 0.45;
+    material.uniforms.uOpacity.value = isDark ? 0.7 : 0.5;
   }, [material]);
 
   const updateAttractors = useCallback((elapsed: number) => {
