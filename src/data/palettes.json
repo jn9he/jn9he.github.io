@@ -1,142 +1,50 @@
 {
-  "Aurora": [
-    "#ff2d75",
-    "#ff6b35",
-    "#ffd23f",
-    "#06d6a0",
-    "#118ab2"
-  ],
-  "Sunset": [
-    "#ff006e",
-    "#fb5607",
-    "#ffbe0b",
-    "#ff7b9c",
-    "#8338ec"
-  ],
-  "Ocean": [
-    "#0077b6",
-    "#00b4d8",
-    "#48cae4",
-    "#90e0ef",
-    "#023e8a"
-  ],
-  "Tropical": [
-    "#ef476f",
-    "#ffd166",
-    "#06d6a0",
-    "#118ab2",
-    "#073b4c"
-  ],
-  "Blossom": [
-    "#ff5e78",
-    "#ff85a1",
-    "#fbb1bd",
-    "#f9dcc4",
-    "#a259ff"
-  ],
-  "Electric": [
-    "#7400b8",
-    "#6930c3",
-    "#5e60ce",
-    "#4ea8de",
-    "#56cfe1"
-  ],
-  "Wildflower": [
-    "#ff595e",
-    "#ffca3a",
-    "#8ac926",
-    "#1982c4",
-    "#6a4c93"
-  ],
-  "Coral": [
-    "#ff4d6d",
-    "#ff758f",
-    "#ff8fa3",
-    "#ffb3c1",
-    "#c9184a"
-  ],
-  "DeepSea": [
-    "#03045e",
-    "#0077b6",
-    "#00b4d8",
-    "#90e0ef",
-    "#caf0f8"
-  ],
-  "Ember": [
-    "#d00000",
-    "#e85d04",
-    "#faa307",
-    "#ffba08",
-    "#dc2f02"
-  ],
-  "Neon": [
-    "#ff00ff",
-    "#00ffff",
-    "#ff3366",
-    "#33ff66",
-    "#ffff00"
-  ],
-  "Jewel": [
-    "#9b5de5",
-    "#f15bb5",
-    "#fee440",
-    "#00bbf9",
-    "#00f5d4"
-  ],
-  "Spring": [
-    "#70d6ff",
-    "#ff70a6",
-    "#ff9770",
-    "#ffd670",
-    "#e9ff70"
-  ],
-  "Galaxy": [
-    "#240046",
-    "#5a189a",
-    "#9d4edd",
-    "#c77dff",
-    "#e0aaff"
-  ],
-  "Magma": [
-    "#f72585",
-    "#b5179e",
-    "#7209b7",
-    "#560bad",
-    "#480ca8"
-  ],
-  "Paradise": [
-    "#f94144",
-    "#f3722c",
-    "#f8961e",
-    "#f9c74f",
-    "#90be6d"
-  ],
-  "Aqua": [
-    "#22577a",
-    "#38a3a5",
-    "#57cc99",
-    "#80ed99",
-    "#c7f9cc"
-  ],
-  "Candy": [
-    "#ff0a54",
-    "#ff477e",
-    "#ff7096",
-    "#ff85a1",
-    "#ff99ac"
-  ],
-  "Vivid": [
-    "#ff0000",
-    "#ff8700",
-    "#ffd300",
-    "#0aff99",
-    "#147df5"
-  ],
-  "Dusk": [
-    "#582f0e",
-    "#7f4f24",
-    "#936639",
-    "#a68a64",
-    "#b6ad90"
-  ]
+  "frost": {
+    "label": "Frost",
+    "colors": ["#e0f0ff", "#6baed6", "#1a5276"]
+  },
+  "ember": {
+    "label": "Ember",
+    "colors": ["#ffecd2", "#ff7043", "#bf360c"]
+  },
+  "aurora": {
+    "label": "Aurora",
+    "colors": ["#c8ffd4", "#00e676", "#004d40"]
+  },
+  "lavender": {
+    "label": "Lavender",
+    "colors": ["#f3e5f5", "#ab47bc", "#4a148c"]
+  },
+  "moonlight": {
+    "label": "Moonlight",
+    "colors": ["#f5f5f5", "#90a4ae", "#263238"]
+  },
+  "gold": {
+    "label": "Gold",
+    "colors": ["#fff8e1", "#ffc107", "#6d4c00"]
+  },
+  "ocean": {
+    "label": "Ocean",
+    "colors": ["#e0f7fa", "#0097a7", "#004d5a"]
+  },
+  "rose": {
+    "label": "Rose",
+    "colors": ["#fce4ec", "#e91e63", "#6a0028"]
+  },
+  "arctic": {
+    "label": "Arctic",
+    "colors": ["#ffffff", "#b3e5fc", "#0277bd"]
+  },
+  "dusk": {
+    "label": "Dusk",
+    "colors": ["#ede7f6", "#7c4dff", "#1a0056"]
+  },
+  "copper": {
+    "label": "Copper",
+    "colors": ["#fbe9e7", "#e64a19", "#4e1600"]
+  },
+  "mint": {
+    "label": "Mint",
+    "colors": ["#e8f5e9", "#66bb6a", "#1b4332"]
+  }
 }

@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useState, useRef, useCallback } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
-import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import GPGPUParticles from './particles/GPGPUParticles';
 import {
@@ -16,7 +16,7 @@ function ThemeBackground() {
   useEffect(() => {
     const updateBg = () => {
       const theme = document.documentElement.getAttribute('data-theme');
-      scene.background = new THREE.Color(theme === 'light' ? '#fafaf9' : '#0a0a0a');
+      scene.background = new THREE.Color(theme === 'light' ? '#fafaf9' : '#050508');
     };
     updateBg();
     const observer = new MutationObserver(updateBg);
@@ -26,7 +26,7 @@ function ThemeBackground() {
   return null;
 }
 
-function AdaptiveBloom({ intensity }: { intensity: number }) {
+function AdaptivePostProcessing({ bloom }: { bloom: boolean }) {
   const [isDark, setIsDark] = useState(true);
   useEffect(() => {
     const updateTheme = () => {
@@ -38,14 +38,21 @@ function AdaptiveBloom({ intensity }: { intensity: number }) {
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     return () => observer.disconnect();
   }, []);
+
   return (
     <EffectComposer>
-      <Bloom
-        intensity={isDark ? intensity : intensity * 0.4}
-        luminanceThreshold={0.8}
-        luminanceSmoothing={0.9}
-        radius={0.4}
-        mipmapBlur
+      {bloom && (
+        <Bloom
+          intensity={isDark ? 0.8 : 0.3}
+          luminanceThreshold={isDark ? 0.2 : 0.5}
+          luminanceSmoothing={0.9}
+          radius={0.6}
+          mipmapBlur
+        />
+      )}
+      <Vignette
+        darkness={isDark ? 0.4 : 0.2}
+        offset={0.3}
       />
     </EffectComposer>
   );
@@ -111,13 +118,13 @@ export default function KoiBackground() {
       <Canvas
         dpr={config.dpr}
         gl={{ antialias: false, powerPreference: 'high-performance' }}
-        camera={{ position: [0, 0, 5], fov: 60 }}
+        camera={{ position: [0, 0, 6], fov: 50, near: 0.1, far: 50 }}
         frameloop="always"
       >
         <ThemeBackground />
         <Suspense fallback={null}>
           <GPGPUParticles />
-          {config.bloom && <AdaptiveBloom intensity={0.15} />}
+          <AdaptivePostProcessing bloom={config.bloom} />
           <VisibilityPauser />
           <FPSTracker onDowngrade={handleDowngrade} />
         </Suspense>

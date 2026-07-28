@@ -1,4 +1,4 @@
-import { useMemo, useRef, useEffect, useCallback } from 'react';
+import { useMemo, useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGPGPU } from './useGPGPU';
@@ -7,50 +7,91 @@ import particlesVert from './shaders/particles.vert?raw';
 import particlesFrag from './shaders/particles.frag?raw';
 
 import palettesData from '../../data/palettes.json';
-import silhouettesData from '../../data/silhouettes.json';
 
-const palettes = palettesData as Record<string, string[]>;
-const silhouettes = silhouettesData as Record<string, number[][]>;
-const familyNames = Object.keys(palettes);
+const palettes = palettesData as Record<string, { colors: string[]; label: string }>;
+const paletteNames = Object.keys(palettes);
 
-function hexToColor(hex: string): THREE.Color {
-  return new THREE.Color(hex);
-}
+/**
+ * Attractor keyframes define sculptural configurations.
+ * Each keyframe is an array of 4 attractor states: [x, y, z, strength]
+ * The system interpolates between keyframes to create morphing form.
+ */
+const ATTRACTOR_KEYFRAMES: number[][][] = [
+  // Compact central cluster — dense organism core
+  [
+    [0.0, 0.5, 0.0, 1.2],
+    [0.8, -0.3, 0.3, 0.8],
+    [-0.7, -0.2, -0.2, 0.9],
+    [0.2, -0.8, -0.3, 0.7],
+  ],
+  // Vertical ribbon — elongated form
+  [
+    [0.0, 1.5, 0.0, 1.0],
+    [0.3, 0.5, 0.2, 0.9],
+    [-0.2, -0.5, -0.1, 0.9],
+    [0.0, -1.5, 0.0, 1.0],
+  ],
+  // Orbital ring — particles form a spinning torus-like shape
+  [
+    [1.2, 0.0, 0.4, 0.9],
+    [-1.2, 0.0, -0.4, 0.9],
+    [0.0, 1.0, 0.3, 0.8],
+    [0.0, -1.0, -0.3, 0.8],
+  ],
+  // Asymmetric drift — organic offset with depth
+  [
+    [-0.8, 0.8, 0.6, 1.1],
+    [1.0, 0.3, -0.4, 0.7],
+    [0.3, -0.9, 0.3, 0.9],
+    [-0.5, -0.4, -0.6, 0.8],
+  ],
+  // Dispersed nebula — wider, breathing form
+  [
+    [0.5, 1.2, 0.5, 0.6],
+    [-1.0, 0.0, -0.3, 0.7],
+    [1.0, -0.8, 0.2, 0.6],
+    [-0.3, -1.2, -0.4, 0.7],
+  ],
+  // Converging spiral
+  [
+    [0.0, 0.0, 0.0, 1.5],
+    [1.5, 0.8, 0.3, 0.5],
+    [-1.0, -1.0, -0.5, 0.5],
+    [0.5, -0.5, 0.8, 0.6],
+  ],
+];
 
-function lerpColor(a: THREE.Color, b: THREE.Color, t: number): THREE.Color {
-  return new THREE.Color().copy(a).lerp(b, t);
+const KEYFRAME_DURATION = 12.0; // seconds per keyframe hold
+const TRANSITION_DURATION = 6.0; // seconds to morph between keyframes
+
+function hexToVec3(hex: string): THREE.Vector3 {
+  const c = new THREE.Color(hex);
+  return new THREE.Vector3(c.r, c.g, c.b);
 }
 
 function smoothstep(t: number): number {
-  return t * t * (3 - 2 * t);
+  const clamped = Math.max(0, Math.min(1, t));
+  return clamped * clamped * (3 - 2 * clamped);
+}
+
+function lerpVec4(a: number[], b: number[], t: number): number[] {
+  return a.map((v, i) => v + (b[i] - v) * t);
 }
 
 export default function GPGPUParticles() {
   const { viewport } = useThree();
-  const { simulate, getPositionTexture, particleCount, fboWidth, fboHeight, material: simMaterial } = useGPGPU();
+  const {
+    simulate,
+    getPositionTexture,
+    getVelocityTexture,
+    particleCount,
+    fboWidth,
+    fboHeight,
+    material: simMaterial,
+  } = useGPGPU();
 
-  const paletteRef = useRef({
-    currentFamily: familyNames[Math.floor(Math.random() * familyNames.length)],
-    nextFamily: familyNames[Math.floor(Math.random() * familyNames.length)],
-    transitionProgress: 0,
-    lastSwitch: 0,
-    switchInterval: 8 + Math.random() * 7,
-  });
-
-  const attractorRef = useRef({
-    active: false,
-    points: [] as number[][],
-    strength: 0,
-    targetStrength: 0,
-    holdStart: 0,
-    holdDuration: 5,
-    lastTrigger: 0,
-    triggerInterval: 12 + Math.random() * 8,
-    phase: 'idle' as 'idle' | 'forming' | 'holding' | 'dissolving',
-  });
-
+  // Theme tracking
   const themeRef = useRef<'dark' | 'light'>('dark');
-
   useEffect(() => {
     const updateTheme = () => {
       const theme = document.documentElement.getAttribute('data-theme') as 'dark' | 'light';
@@ -62,6 +103,27 @@ export default function GPGPUParticles() {
     return () => observer.disconnect();
   }, []);
 
+  // Palette cycling state
+  const paletteRef = useRef({
+    currentIndex: Math.floor(Math.random() * paletteNames.length),
+    nextIndex: Math.floor(Math.random() * paletteNames.length),
+    progress: 0,
+    lastSwitch: 0,
+    interval: 15 + Math.random() * 10,
+  });
+
+  // Attractor choreography state
+  const choreographyRef = useRef({
+    currentKeyframe: 0,
+    nextKeyframe: 1,
+    progress: 0,
+    phase: 'holding' as 'holding' | 'transitioning',
+    phaseStart: 0,
+    // Slow orbital drift adds organic motion on top of keyframes
+    orbitAngle: 0,
+  });
+
+  // Create geometry and material
   const { geometry, material } = useMemo(() => {
     const indices = new Float32Array(particleCount);
     for (let i = 0; i < particleCount; i++) indices[i] = i;
@@ -70,22 +132,22 @@ export default function GPGPUParticles() {
     geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(particleCount * 3), 3));
     geo.setAttribute('aIndex', new THREE.BufferAttribute(indices, 1));
 
-    const initialPalette = palettes[paletteRef.current.currentFamily] || ['#4488ff', '#22ccaa', '#ff6644', '#ffaa22', '#8844ff'];
+    const initialPalette = palettes[paletteNames[paletteRef.current.currentIndex]];
+    const colors = initialPalette.colors;
 
     const mat = new THREE.ShaderMaterial({
       vertexShader: particlesVert,
       fragmentShader: particlesFrag,
       uniforms: {
         uPositions: { value: null },
-        uResolution: { value: new THREE.Vector2(fboWidth, fboHeight) },
-        uPointSize: { value: 180.0 },
-        uAspect: { value: viewport.aspect },
-        uColor1: { value: hexToColor(initialPalette[0]) },
-        uColor2: { value: hexToColor(initialPalette[1]) },
-        uColor3: { value: hexToColor(initialPalette[2]) },
-        uColor4: { value: hexToColor(initialPalette[3]) },
-        uColor5: { value: hexToColor(initialPalette[4]) },
-        uOpacity: { value: 0.7 },
+        uVelocities: { value: null },
+        uFboResolution: { value: new THREE.Vector2(fboWidth, fboHeight) },
+        uPointSize: { value: 3.5 },
+        uDepthFade: { value: 10.0 },
+        uColor1: { value: new THREE.Color(colors[0]) },
+        uColor2: { value: new THREE.Color(colors[1]) },
+        uColor3: { value: new THREE.Color(colors[2]) },
+        uOpacity: { value: 0.07 },
         uIsDark: { value: 1.0 },
       },
       transparent: true,
@@ -95,95 +157,105 @@ export default function GPGPUParticles() {
     });
 
     return { geometry: geo, material: mat };
-  }, [particleCount, fboWidth, fboHeight, viewport.aspect]);
+  }, [particleCount, fboWidth, fboHeight]);
 
-  const updatePalette = useCallback((elapsed: number) => {
-    const ps = paletteRef.current;
+  // Update attractor positions based on choreography
+  const updateAttractors = (elapsed: number) => {
+    const ch = choreographyRef.current;
 
-    if (elapsed - ps.lastSwitch > ps.switchInterval && ps.transitionProgress >= 1.0) {
-      ps.currentFamily = ps.nextFamily;
-      let next = familyNames[Math.floor(Math.random() * familyNames.length)];
-      while (next === ps.currentFamily && familyNames.length > 1) {
-        next = familyNames[Math.floor(Math.random() * familyNames.length)];
+    if (ch.phase === 'holding') {
+      if (elapsed - ch.phaseStart > KEYFRAME_DURATION) {
+        ch.phase = 'transitioning';
+        ch.phaseStart = elapsed;
+        ch.nextKeyframe = (ch.currentKeyframe + 1) % ATTRACTOR_KEYFRAMES.length;
       }
-      ps.nextFamily = next;
-      ps.transitionProgress = 0;
-      ps.lastSwitch = elapsed;
-      ps.switchInterval = 8 + Math.random() * 7;
+    } else if (ch.phase === 'transitioning') {
+      const transProgress = (elapsed - ch.phaseStart) / TRANSITION_DURATION;
+      if (transProgress >= 1.0) {
+        ch.currentKeyframe = ch.nextKeyframe;
+        ch.phase = 'holding';
+        ch.phaseStart = elapsed;
+        ch.progress = 0;
+      } else {
+        ch.progress = smoothstep(transProgress);
+      }
     }
 
-    if (ps.transitionProgress < 1.0) {
-      ps.transitionProgress = Math.min(1.0, ps.transitionProgress + 0.005);
+    // Interpolate attractors between keyframes
+    const currentKf = ATTRACTOR_KEYFRAMES[ch.currentKeyframe];
+    const nextKf = ATTRACTOR_KEYFRAMES[ch.nextKeyframe];
+    const t = ch.phase === 'transitioning' ? ch.progress : 0;
+
+    // Add slow orbital drift for organic motion
+    ch.orbitAngle += 0.003;
+    const orbitX = Math.cos(ch.orbitAngle) * 0.15;
+    const orbitY = Math.sin(ch.orbitAngle * 0.7) * 0.1;
+    const orbitZ = Math.sin(ch.orbitAngle * 0.4) * 0.1;
+
+    const attractors = simMaterial.uniforms.uAttractors.value as THREE.Vector4[];
+    for (let i = 0; i < 4; i++) {
+      const lerped = lerpVec4(currentKf[i], nextKf[i], t);
+      attractors[i].set(
+        lerped[0] + orbitX * (i % 2 === 0 ? 1 : -1),
+        lerped[1] + orbitY * (i < 2 ? 1 : -1),
+        lerped[2] + orbitZ,
+        lerped[3]
+      );
     }
+  };
 
-    const currentColors = palettes[ps.currentFamily] || ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'];
-    const nextColors = palettes[ps.nextFamily] || ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'];
-    const t = smoothstep(ps.transitionProgress);
-
+  // Update palette colors
+  const updatePalette = (elapsed: number) => {
+    const ps = paletteRef.current;
     const isDark = themeRef.current === 'dark';
+
+    if (elapsed - ps.lastSwitch > ps.interval && ps.progress >= 1.0) {
+      ps.currentIndex = ps.nextIndex;
+      let next = Math.floor(Math.random() * paletteNames.length);
+      while (next === ps.currentIndex && paletteNames.length > 1) {
+        next = Math.floor(Math.random() * paletteNames.length);
+      }
+      ps.nextIndex = next;
+      ps.progress = 0;
+      ps.lastSwitch = elapsed;
+      ps.interval = 15 + Math.random() * 10;
+    }
+
+    if (ps.progress < 1.0) {
+      ps.progress = Math.min(1.0, ps.progress + 0.003);
+    }
+
+    const currentColors = palettes[paletteNames[ps.currentIndex]].colors;
+    const nextColors = palettes[paletteNames[ps.nextIndex]].colors;
+    const t = smoothstep(ps.progress);
+
+    // Lerp 3 colors for the monochromatic gradient
+    const c1 = new THREE.Color(currentColors[0]).lerp(new THREE.Color(nextColors[0]), t);
+    const c2 = new THREE.Color(currentColors[1]).lerp(new THREE.Color(nextColors[1]), t);
+    const c3 = new THREE.Color(currentColors[2]).lerp(new THREE.Color(nextColors[2]), t);
+
+    (material.uniforms.uColor1.value as THREE.Color).copy(c1);
+    (material.uniforms.uColor2.value as THREE.Color).copy(c2);
+    (material.uniforms.uColor3.value as THREE.Color).copy(c3);
+
     material.uniforms.uIsDark.value = isDark ? 1.0 : 0.0;
-
-    for (let i = 0; i < 5; i++) {
-      const c = lerpColor(hexToColor(currentColors[i]), hexToColor(nextColors[i]), t);
-      const uniform = material.uniforms[`uColor${i + 1}` as keyof typeof material.uniforms];
-      if (uniform) (uniform.value as THREE.Color).copy(c);
-    }
-
-    material.uniforms.uOpacity.value = isDark ? 0.7 : 0.5;
-  }, [material]);
-
-  const updateAttractors = useCallback((elapsed: number) => {
-    const att = attractorRef.current;
-    switch (att.phase) {
-      case 'idle':
-        if (elapsed - att.lastTrigger > att.triggerInterval) {
-          const family = familyNames[Math.floor(Math.random() * familyNames.length)];
-          const points = silhouettes[family];
-          if (points && points.length > 3) {
-            att.points = points;
-            att.phase = 'forming';
-            att.targetStrength = 1.0;
-            att.lastTrigger = elapsed;
-            att.triggerInterval = 12 + Math.random() * 8;
-          }
-        }
-        break;
-      case 'forming':
-        att.strength = Math.min(att.targetStrength, att.strength + 0.008);
-        if (att.strength >= att.targetStrength) {
-          att.phase = 'holding';
-          att.holdStart = elapsed;
-        }
-        break;
-      case 'holding':
-        if (elapsed - att.holdStart > att.holdDuration) att.phase = 'dissolving';
-        break;
-      case 'dissolving':
-        att.strength = Math.max(0, att.strength - 0.003);
-        if (att.strength <= 0) {
-          att.phase = 'idle';
-          att.active = false;
-          att.points = [];
-        }
-        break;
-    }
-    if (att.points.length > 0 && att.strength > 0) {
-      simMaterial.uniforms.uCenterGravity.value = 0.006 + att.strength * 0.025;
-    } else {
-      simMaterial.uniforms.uCenterGravity.value = 0.006;
-    }
-  }, [simMaterial]);
+    material.uniforms.uOpacity.value = isDark ? 0.07 : 0.05;
+  };
 
   useFrame((state, delta) => {
     const elapsed = state.clock.getElapsedTime();
-    simulate(delta);
-    material.uniforms.uPositions.value = getPositionTexture();
-    material.uniforms.uAspect.value = viewport.aspect;
-    updatePalette(elapsed);
+
+    // Update choreography
     updateAttractors(elapsed);
+    updatePalette(elapsed);
+
+    // Run simulation
+    simulate(delta);
+
+    // Update render material textures
+    material.uniforms.uPositions.value = getPositionTexture();
+    material.uniforms.uVelocities.value = getVelocityTexture();
   });
 
-  return (
-    <points geometry={geometry} material={material} frustumCulled={false} />
-  );
+  return <points geometry={geometry} material={material} frustumCulled={false} />;
 }
