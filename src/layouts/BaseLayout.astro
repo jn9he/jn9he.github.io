@@ -1,7 +1,6 @@
 ---
 import ProfileBadge from '../components/ProfileBadge.astro';
 import HamburgerNav from '../components/HamburgerNav';
-import KoiBackground from '../components/KoiBackground';
 
 interface Props {
   title?: string;
@@ -32,9 +31,6 @@ const { title = 'Joshua Nghe', description = 'Portfolio — Statistics, Data Sci
   </script>
 </head>
 <body>
-  <!-- Koi Pond Background -->
-  <KoiBackground client:only="react" />
-
   <!-- Hamburger Nav -->
   <HamburgerNav client:load />
 
@@ -51,7 +47,6 @@ const { title = 'Joshua Nghe', description = 'Portfolio — Statistics, Data Sci
     <div class="footer__inner container">
       <div class="footer__bottom">
         <p class="footer__copy">© 2026 Joshua Nghe</p>
-        <p class="footer__credits">Generative background: fish taxonomy data → particle flow • Three.js</p>
       </div>
     </div>
   </footer>
@@ -218,14 +213,6 @@ const { title = 'Joshua Nghe', description = 'Portfolio — Statistics, Data Sci
   main {
     min-height: 100vh;
     padding-top: 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* --- Footer readability over particles --- */
-  .footer {
-    position: relative;
-    z-index: 1;
   }
 
   /* --- Project List (Seasons-style) --- */
@@ -426,13 +413,6 @@ const { title = 'Joshua Nghe', description = 'Portfolio — Statistics, Data Sci
   .footer__copy {
     font-size: 0.75rem;
     color: var(--text-muted);
-  }
-
-  .footer__credits {
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    opacity: 0.6;
-    margin-top: 0.5rem;
   }
 
   /* --- Responsive --- */
