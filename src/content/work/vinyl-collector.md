@@ -5,9 +5,8 @@ category: "Data Science"
 thumbnail: "/images/project-bloom.jpg"
 description: "Computer vision and ETL pipeline that identifies vinyl record covers and catalogs them against Discogs data."
 images:
-  - "/images/gallery-01.jpg"
-  - "/images/gallery-02.jpg"
-  - "/images/gallery-03.jpg"
+  - "/images/vinyl-collector-01.png"
+  - "/images/vinyl-collector-02.png"
 ---
 
 ## Overview
