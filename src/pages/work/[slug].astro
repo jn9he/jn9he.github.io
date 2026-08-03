@@ -42,6 +42,15 @@ const nextWork = currentIndex < sortedWorks.length - 1 ? sortedWorks[currentInde
             <span class="project__category">{work.data.category}</span>
           </div>
           <p class="project__description">{work.data.description}</p>
+          {work.data.links && work.data.links.length > 0 && (
+            <div class="project__links">
+              {work.data.links.map((link: { label: string; url: string }) => (
+                <a href={link.url} class="project__link" target="_blank" rel="noopener noreferrer">
+                  {link.label} ↗
+                </a>
+              ))}
+            </div>
+          )}
         </header>
       </ScrollReveal>
 
@@ -141,6 +150,30 @@ const nextWork = currentIndex < sortedWorks.length - 1 ? sortedWorks[currentInde
     font-size: 1.1rem;
     line-height: 1.7;
     color: var(--text-secondary);
+  }
+
+  .project__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .project__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    font-size: 0.85rem;
+    color: var(--text);
+    transition: border-color var(--transition), opacity var(--transition);
+  }
+
+  .project__link:hover {
+    border-color: var(--text);
+    opacity: 0.7;
   }
 
   .project__hero-image {

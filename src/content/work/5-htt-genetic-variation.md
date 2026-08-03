@@ -8,11 +8,18 @@ images:
   - "/images/gallery-01.jpg"
   - "/images/gallery-02.jpg"
   - "/images/gallery-03.jpg"
+links:
+  - label: "GitHub Repo"
+    url: "https://github.com/jn9he/genetic-variation"
 ---
 
 ## Overview
 
 An academic research paper investigating how genetic vulnerability (the 5-HTT serotonin transporter polymorphism) interacts with environmental stressors to affect depression risk.
+
+## Tech Stack
+
+R (Tidyverse, ggplot2), LaTeX.
 
 ## Approach
 

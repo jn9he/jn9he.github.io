@@ -8,11 +8,18 @@ images:
   - "/images/gallery-01.jpg"
   - "/images/gallery-02.jpg"
   - "/images/gallery-03.jpg"
+links:
+  - label: "View Dashboard"
+    url: "https://public.tableau.com/app/profile/joshua.nghe7340/viz/SustainabilityMetricsDashboard_17648891202550/Dashboard1"
 ---
 
 ## Overview
 
 A cost-benefit and ROI analysis of university sustainability initiatives, paired with a dashboard for tracking green investment performance.
+
+## Tech Stack
+
+Python (Pandas, NumPy), Scikit-learn, Tableau.
 
 ## Approach
 

@@ -6,11 +6,18 @@ thumbnail: "/images/sentiment-pipelines-01.png"
 description: "Three distinct sentiment analysis pipelines built at Spectrum, each trading off differently between context depth, interpretability, and structured output."
 images:
   - "/images/sentiment-pipelines-01.png"
+links:
+  - label: "GitHub Repo"
+    url: "https://github.com/jn9he/hybrid-rag-pipeline"
 ---
 
 ## Overview
 
 Built and compared three separate approaches to sentiment analysis on long-form transcripts, each suited to a different constraint — context length, prediction control, or downstream modeling needs.
+
+## Tech Stack
+
+Python, foundation model APIs (LLM), hybrid RAG retrieval (HyDE, agglomerative clustering), gradient boosting (GBM).
 
 ## 1. Hybrid RAG Pipeline
 
