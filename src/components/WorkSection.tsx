@@ -7,7 +7,7 @@ interface Project {
   title: string;
   date: string;
   category: string;
-  thumbnail: string;
+  thumbnail?: string;
 }
 
 interface Props {

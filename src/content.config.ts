@@ -7,7 +7,7 @@ const work = defineCollection({
     title: z.string(),
     date: z.string(),
     category: z.string(),
-    thumbnail: z.string(),
+    thumbnail: z.string().optional(),
     description: z.string(),
     images: z.array(z.string()).optional(),
     links: z.array(z.object({ label: z.string(), url: z.string() })).optional(),

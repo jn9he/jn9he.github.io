@@ -55,11 +55,13 @@ const nextWork = currentIndex < sortedWorks.length - 1 ? sortedWorks[currentInde
       </ScrollReveal>
 
       <!-- Hero Image -->
-      <ScrollReveal delay={0.15} client:visible>
-        <div class="project__hero-image">
-          <img src={work.data.thumbnail} alt={work.data.title} />
-        </div>
-      </ScrollReveal>
+      {work.data.thumbnail && (
+        <ScrollReveal delay={0.15} client:visible>
+          <div class="project__hero-image">
+            <img src={work.data.thumbnail} alt={work.data.title} />
+          </div>
+        </ScrollReveal>
+      )}
 
       <!-- Content -->
       <ScrollReveal delay={0.1} client:visible>

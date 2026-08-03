@@ -2,12 +2,7 @@
 title: "5-HTT Genetic Variation & Depression Risk"
 date: "11/2024"
 category: "Statistics"
-thumbnail: "/images/project-neon.jpg"
 description: "Multivariable regression study modeling how the 5-HTT serotonin transporter polymorphism interacts with stressful life events to affect depression risk."
-images:
-  - "/images/gallery-01.jpg"
-  - "/images/gallery-02.jpg"
-  - "/images/gallery-03.jpg"
 links:
   - label: "GitHub Repo"
     url: "https://github.com/jn9he/genetic-variation"

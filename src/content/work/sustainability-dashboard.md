@@ -2,12 +2,7 @@
 title: "Sustainability Analysis & Dashboard"
 date: "09/2025"
 category: "Data Science"
-thumbnail: "/images/project-flux.jpg"
 description: "Automated data pipeline and Tableau dashboard tracking university green investment and utility performance, with regression-based ROI projections."
-images:
-  - "/images/gallery-01.jpg"
-  - "/images/gallery-02.jpg"
-  - "/images/gallery-03.jpg"
 links:
   - label: "View Dashboard"
     url: "https://public.tableau.com/app/profile/joshua.nghe7340/viz/SustainabilityMetricsDashboard_17648891202550/Dashboard1"

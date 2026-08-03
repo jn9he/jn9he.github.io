@@ -6,7 +6,7 @@ interface Project {
   title: string;
   date: string;
   category: string;
-  thumbnail: string;
+  thumbnail?: string;
 }
 
 interface Props {
@@ -35,7 +35,7 @@ export default function ProjectList({ projects, activeFilter = 'All' }: Props) {
     >
       {/* Floating thumbnail */}
       <AnimatePresence>
-        {hoveredProject && (
+        {hoveredProject && hoveredProject.thumbnail && (
           <motion.div
             className="project-list__thumbnail"
             initial={{ opacity: 0, scale: 0.9 }}
