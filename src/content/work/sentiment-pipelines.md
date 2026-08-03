@@ -2,12 +2,10 @@
 title: "Sentiment Analysis Pipelines"
 date: "06/2026"
 category: "Data Science"
-thumbnail: "/images/project-cobalt.jpg"
+thumbnail: "/images/sentiment-pipelines-01.png"
 description: "Three distinct sentiment analysis pipelines built at Spectrum, each trading off differently between context depth, interpretability, and structured output."
 images:
-  - "/images/gallery-01.jpg"
-  - "/images/gallery-02.jpg"
-  - "/images/gallery-03.jpg"
+  - "/images/sentiment-pipelines-01.png"
 ---
 
 ## Overview
