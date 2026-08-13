@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ScrollReveal from '../../components/ScrollReveal';
+import Lightbox from '../../components/Lightbox';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -58,7 +59,7 @@ const nextWork = currentIndex < sortedWorks.length - 1 ? sortedWorks[currentInde
       {work.data.thumbnail && (
         <ScrollReveal delay={0.15} client:visible>
           <div class="project__hero-image">
-            <img src={work.data.thumbnail} alt={work.data.title} />
+            <Lightbox client:visible src={work.data.thumbnail} alt={work.data.title} />
           </div>
         </ScrollReveal>
       )}
@@ -76,7 +77,7 @@ const nextWork = currentIndex < sortedWorks.length - 1 ? sortedWorks[currentInde
           {work.data.images.map((image: string, i: number) => (
             <ScrollReveal delay={i * 0.1} client:visible>
               <div class="project__gallery-item">
-                <img src={image} alt={`${work.data.title} — Image ${i + 1}`} />
+                <Lightbox client:visible src={image} alt={`${work.data.title} — Image ${i + 1}`} />
               </div>
             </ScrollReveal>
           ))}
@@ -185,11 +186,13 @@ const nextWork = currentIndex < sortedWorks.length - 1 ? sortedWorks[currentInde
     background: var(--bg-secondary);
   }
 
-  .project__hero-image img {
+  .project__hero-image :global(img) {
+    display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 16/10;
-    object-fit: cover;
+    max-height: 640px;
+    object-fit: contain;
+    margin: 0 auto;
   }
 
   .project__content {
@@ -243,7 +246,7 @@ const nextWork = currentIndex < sortedWorks.length - 1 ? sortedWorks[currentInde
     background: var(--bg-secondary);
   }
 
-  .project__gallery-item img {
+  .project__gallery-item :global(img) {
     width: 100%;
     height: auto;
     aspect-ratio: 3/2;
