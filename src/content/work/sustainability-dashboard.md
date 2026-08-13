@@ -1,6 +1,6 @@
 ---
 title: "Sustainability Analysis & Dashboard"
-date: "09/2025"
+date: "12/2025"
 category: "Data Science"
 description: "Automated data pipeline and Tableau dashboard tracking university green investment and utility performance, with regression-based ROI projections."
 links:

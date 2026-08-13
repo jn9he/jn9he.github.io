@@ -1,6 +1,6 @@
 ---
 title: "FIFA Player Market Statistics"
-date: "03/2026"
+date: "06/2026"
 category: "Statistics"
 thumbnail: "/images/player-market-01.png"
 description: "Capstone analysis of FIFA player and market data, identifying undervalued players and evaluating clubs by acquisition efficiency."

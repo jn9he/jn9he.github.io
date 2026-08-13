@@ -1,6 +1,6 @@
 ---
 title: "FP&A Dashboard"
-date: "05/2026"
+date: "08/2026"
 category: "Data Science"
 thumbnail: "/images/fpa-dashboard-01.png"
 description: "Proof-of-concept labor and AWS cost planning tool built at Spectrum, backed by an automated cloud cost data pipeline."

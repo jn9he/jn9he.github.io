@@ -1,6 +1,6 @@
 ---
 title: "Vinyl Collector"
-date: "07/2026"
+date: "12/2025"
 category: "Data Science"
 thumbnail: "/images/vinyl-collector-04.png"
 description: "Computer vision and ETL pipeline that identifies vinyl record covers and catalogs them against Discogs data."
