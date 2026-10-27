@@ -1,6 +1,47 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ScrollReveal from '../components/ScrollReveal';
+import AboutGallery from '../components/AboutGallery.astro';
+const galleryImages = [
+  {
+    src: '/images/gallery_images/pfp_2.jpg',
+    alt: 'Joshua at a venue with a blue-lit stage',
+    caption: 'Jazz  concert in Pennington',
+  },
+  {
+    src: '/images/gallery_images/IMG_6810.jpg',
+    alt: 'Snow-covered mountains viewed from a ski slope',
+    caption: 'North Park, CO',
+  },
+    {
+    src: '/images/gallery_images/IMG_1506.jpeg',
+    alt: 'Joshua at a historic outdoor exhibit',
+    caption: 'Laser Cut Artwork',
+  },
+    {
+    src: '/images/gallery_images/IMG_0936.jpeg',
+    alt: 'Joshua at a historic outdoor exhibit',
+    caption: 'Kailua, HI',
+  },
+  {
+    src: 'images/gallery_images/F0711639-E55D-4527-81DA-6B234DCD3028.JPG',
+    alt: 'Joshua at a historic outdoor exhibit',
+    caption: 'Chasing Smallmouth',
+  },
+  {
+    src: '/images/gallery_images/IMG_2387_Original.jpeg',
+    alt: 'Green mountain landscape with Joshua on a trail',
+    caption: 'Crested Butte, CO',
+  },
+
+  {
+    src: '/images/gallery_images/IMG_1770_Original.JPG',
+    alt: 'Joshua at a historic outdoor exhibit',
+    caption: 'Rothko at the MOMA',
+  },
+
+
+];
 ---
 
 <BaseLayout title="About — Joshua Nghe">
@@ -8,29 +49,32 @@ import ScrollReveal from '../components/ScrollReveal';
     <div class="container">
       <ScrollReveal client:visible>
         <header class="about__header">
-          <h1 class="about__title">Meet Joshua</h1>
+          <img class="about__portrait" src="/images/pfp_bw.jpg" alt="Joshua Nghe" />
+          <h1 class="about__title">About Me</h1>
         </header>
       </ScrollReveal>
 
       <div class="about__content">
         <ScrollReveal delay={0.1} client:visible>
           <p class="about__lead">
-            I'm <strong>Joshua Nghe</strong>, a statistics undergraduate with minors in Data Science and Design, exploring the intersection of rigorous analysis and visual storytelling.
+            I'm <strong>Joshua Nghe</strong>, a statistics undergraduate that likes to build.
           </p>
         </ScrollReveal>
 
         <ScrollReveal delay={0.2} client:visible>
           <p>
-            I believe that data, when treated with care and presented with intention, has the power to change how people understand the world. Every visualization is an invitation to look closer, every model an attempt to capture something real about the patterns that shape our lives.
+            Including my previous experience at Spectrum as a Data Analyst intern in customer operations, I have 1+ years experience in tutoring whether it be privately, through TA position, or at the Colorado State Statistics
+            Success Center. I'm fascinated by the potential of math and computer science as it's methodologies are applied to a variety of fields.
+
+
           </p>
         </ScrollReveal>
 
         <ScrollReveal delay={0.3} client:visible>
           <p>
-            I work across the full spectrum — from statistical modeling and machine learning to information design and user experience. My approach values clarity over complexity, and I aim to create work that feels both rigorous and accessible.
+           My personal interests include alernative music, working out, and the outdoors. I love to stay active and an appreciation for all things beautiful from nature and wildlife to music, artwork, or street skateboarding.
           </p>
         </ScrollReveal>
-
         <ScrollReveal delay={0.4} client:visible>
           <div class="about__details">
             <div class="about__detail-group">
@@ -44,12 +88,21 @@ import ScrollReveal from '../components/ScrollReveal';
             </div>
 
             <div class="about__detail-group">
+              <h3>Prospective Fields of Interest</h3>
+              <ul>
+                <li>Sports, Entertainment, Environmental Analytics</li>
+                <li>Fashion Research and Manufacturing</li>
+                <li>Financial Analysis and Modeling</li>
+              </ul>
+            </div>
+
+            <div class="about__detail-group">
               <h3>Tools</h3>
               <ul>
                 <li>R · Python · SQL</li>
                 <li>tidyverse · scikit-learn · PyTorch</li>
-                <li>D3.js · ggplot2 · Tableau</li>
-                <li>Figma · Framer</li>
+                <li>Microsoft 365 Ecosystem/li>
+                <li>Rhino 3D · Photoshop · FL Studio</li>
               </ul>
             </div>
           </div>
@@ -57,11 +110,16 @@ import ScrollReveal from '../components/ScrollReveal';
 
         <ScrollReveal delay={0.5} client:visible>
           <div class="about__cta">
-            <p>Currently open to interesting collaborations and opportunities.</p>
+            <p>If you'd like to contact me, I'm always open for a chat.</p>
             <a href="/contact" class="about__link">Get in touch →</a>
           </div>
         </ScrollReveal>
       </div>
+
+      <section class="about__gallery-section" aria-labelledby="about-gallery-title">
+        <h2 class="visually-hidden" id="about-gallery-title">Photo gallery</h2>
+        <AboutGallery images={galleryImages} />
+      </section>
     </div>
   </section>
 </BaseLayout>
@@ -73,7 +131,19 @@ import ScrollReveal from '../components/ScrollReveal';
   }
 
   .about__header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
     margin-bottom: 3rem;
+  }
+
+  .about__portrait {
+    width: clamp(88px, 16vw, 140px);
+    height: clamp(88px, 16vw, 140px);
+    flex: none;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
   }
 
   .about__title {
@@ -86,6 +156,26 @@ import ScrollReveal from '../components/ScrollReveal';
     display: flex;
     flex-direction: column;
     gap: 2rem;
+  }
+
+  .about__gallery-section {
+    margin-top: clamp(4rem, 9vw, 7rem);
+    position: relative;
+    left: 50%;
+    width: min(1100px, calc(100vw - 3rem));
+    transform: translateX(-50%);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .about__lead {
@@ -158,6 +248,21 @@ import ScrollReveal from '../components/ScrollReveal';
   }
 
   @media (max-width: 640px) {
+    .about__header {
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .about__portrait {
+      width: 76px;
+      height: 76px;
+    }
+
+    .about__title {
+      font-size: clamp(2.2rem, 9vw, 3rem);
+      padding-top: 0.5rem;
+    }
+
     .about__details {
       grid-template-columns: 1fr;
       gap: 2rem;

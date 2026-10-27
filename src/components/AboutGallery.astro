@@ -1,0 +1,202 @@
+---
+interface GalleryImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+interface Props {
+  images: GalleryImage[];
+}
+
+const { images } = Astro.props;
+const items = images;
+---
+
+<!-- 1. Setup: render two identical horizontal sets for seamless looping. -->
+<div id="gallery" tabindex="0" aria-label="Continuously scrolling photo gallery">
+  <div id="track">
+    {[0, 1].map((copy) => (
+      <div class="gallery__set" aria-hidden={copy === 1 ? 'true' : undefined}>
+        {items.map((item) => (
+          <figure class="gallery__card">
+            <img src={item.src} alt={copy === 1 ? '' : item.alt} loading="lazy" draggable="false" />
+            {item.caption && <figcaption>{item.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<!-- 2–6. Seamless looping, movement, interaction, and resize/image cleanup. -->
+<script>
+  const gallery = document.getElementById('gallery');
+  const track = document.getElementById('track');
+
+  if (gallery instanceof HTMLDivElement && track instanceof HTMLDivElement) {
+    let setWidth = track.scrollWidth / 2;
+    let offset = 0;
+    const speed = 1;
+    let hovering = false;
+    let dragging = false;
+    let lastPointerX = 0;
+
+    function measureSet() {
+      setWidth = track.scrollWidth / 2;
+      offset = setWidth > 0 ? offset % setWidth : 0;
+      track.style.transform = `translateX(${-offset}px)`;
+    }
+
+    function wrapOffset() {
+      if (setWidth <= 0) return;
+      while (offset >= setWidth) offset -= setWidth;
+      while (offset < 0) offset += setWidth;
+    }
+
+    function animate() {
+      if (!hovering && !dragging) {
+        offset += speed;
+        wrapOffset();
+        track.style.transform = `translateX(${-offset}px)`;
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // 3–4. Advance each frame and wrap by one measured set to hide the reset.
+    requestAnimationFrame(animate);
+
+    // 5. Pause on hover/drag; wheel and pointer input adjust the same offset.
+    gallery.addEventListener('pointerenter', () => {
+      hovering = true;
+    });
+
+    gallery.addEventListener('pointerleave', () => {
+      hovering = false;
+    });
+
+    gallery.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      offset += event.deltaY;
+      wrapOffset();
+      track.style.transform = `translateX(${-offset}px)`;
+    }, { passive: false });
+
+    gallery.addEventListener('pointerdown', (event) => {
+      dragging = true;
+      lastPointerX = event.clientX;
+      gallery.setPointerCapture(event.pointerId);
+      gallery.classList.add('is-dragging');
+    });
+
+    gallery.addEventListener('pointermove', (event) => {
+      if (!dragging) return;
+      offset -= event.clientX - lastPointerX;
+      lastPointerX = event.clientX;
+      wrapOffset();
+      track.style.transform = `translateX(${-offset}px)`;
+    });
+
+    function stopDragging(event: PointerEvent) {
+      if (!dragging) return;
+      dragging = false;
+      gallery.classList.remove('is-dragging');
+      if (gallery.hasPointerCapture(event.pointerId)) {
+        gallery.releasePointerCapture(event.pointerId);
+      }
+    }
+
+    gallery.addEventListener('pointerup', stopDragging);
+    gallery.addEventListener('pointercancel', stopDragging);
+
+    // 6. Re-measure after viewport changes or image loads to keep the loop aligned.
+    window.addEventListener('resize', measureSet);
+    track.querySelectorAll('img').forEach((image) => {
+      image.addEventListener('load', measureSet);
+    });
+  }
+</script>
+
+<style>
+  /* 1. Setup */
+  #gallery {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 0.75rem 0 1.5rem;
+    cursor: grab;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  }
+
+  #gallery:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  #gallery.is-dragging {
+    cursor: grabbing;
+  }
+
+  #track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .gallery__set {
+    display: flex;
+    align-items: flex-start;
+    flex: none;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding-right: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .gallery__card {
+    width: clamp(250px, 30vw, 360px);
+    flex: none;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .gallery__card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+  }
+
+  .gallery__card figcaption {
+    min-height: 3.25rem;
+    padding: 0.9rem 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 640px) {
+    .gallery__card {
+      width: min(76vw, 340px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #gallery {
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: thin;
+    }
+
+    #track {
+      will-change: auto;
+    }
+  }
+</style>
